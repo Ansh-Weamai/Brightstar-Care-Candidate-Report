@@ -1,0 +1,159 @@
+/*
+  Step 2 — Lead Heat Index ("From FranConnect")
+
+  DELIBERATELY NOT using design-tokens.css. This step is framed as a
+  read-only window into the existing CRM screen the rep already uses, not
+  one of our own screens — so it's styled like a generic/legacy enterprise
+  CRM widget (plain system font, square-ish corners, grey chrome, stoplight
+  status colors) on purpose, to make the contrast with our own branded
+  steps elsewhere in the tour obvious. Do not "fix" this to match the
+  brand palette.
+*/
+
+.fc-embed {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  background: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 20px;
+  color: #333;
+}
+
+.fc-embed__header {
+  margin-bottom: 10px;
+}
+
+.fc-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #666;
+  background: #eeeeee;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 3px 8px;
+}
+
+.fc-embed__title {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0 0 16px;
+  color: #222;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.fc-embed__gauge-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.fc-gauge__score {
+  font-size: 28px;
+  font-weight: bold;
+  fill: #333;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.fc-gauge__denom {
+  font-size: 12px;
+  font-weight: bold;
+  fill: #666666;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.fc-band {
+  border-radius: 3px;
+  padding: 8px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.fc-band__label {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.fc-band__range {
+  font-size: 11px;
+  font-weight: bold;
+  opacity: 0.85;
+}
+
+.fc-factors {
+  border-top: 1px solid #ddd;
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fc-factor {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 90px 44px;
+  align-items: center;
+  gap: 10px;
+}
+
+.fc-factor__text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.fc-factor__label {
+  font-size: 13px;
+  font-weight: bold;
+  color: #333;
+}
+
+.fc-factor__detail {
+  font-size: 11px;
+  font-weight: bold;
+  color: #666666;
+}
+
+.fc-factor__bar-track {
+  height: 8px;
+  background: #e8e8e8;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.fc-factor__bar-fill {
+  height: 100%;
+}
+
+.fc-factor__bar-fill--pos { background: #5cb85c; }
+.fc-factor__bar-fill--zero { background: #bbb; }
+.fc-factor__bar-fill--neg { background: #d9534f; }
+
+.fc-factor__points {
+  font-size: 13px;
+  font-weight: bold;
+  text-align: right;
+}
+
+.fc-factor__points--pos { color: #3c763d; }
+.fc-factor__points--zero { color: #777; }
+.fc-factor__points--neg { color: #a94442; }
+
+@media (max-width: 480px) {
+  .fc-embed {
+    padding: 14px;
+  }
+  .fc-embed__gauge-row {
+    justify-content: center;
+    text-align: center;
+  }
+  .fc-factor {
+    grid-template-columns: minmax(0, 1fr) 60px 40px;
+  }
+}

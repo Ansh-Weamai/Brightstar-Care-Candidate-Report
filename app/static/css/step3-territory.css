@@ -1,0 +1,167 @@
+/*
+  Step 3 — Territory Read ("From GbBis")
+
+  DELIBERATELY NOT using design-tokens.css, same reasoning as
+  step2-lead-heat.css: this is a read-only window into GbBis's own
+  territory data, not one of our screens, so it keeps the same plain,
+  generic-enterprise look (Arial, square-ish corners, grey chrome) on
+  purpose. Do not restyle this to match the brand palette.
+*/
+
+.gb-embed {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  background: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 20px;
+  color: #333;
+}
+
+.gb-loading {
+  font-size: 13px;
+  font-weight: bold;
+  color: #666666;
+  font-style: italic;
+  margin: 10px 0 0;
+}
+
+.gb-error {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-start;
+  background: #fbeceb;
+  border-left: 4px solid #d9534f;
+  border-radius: 2px;
+  padding: 12px;
+  margin-top: 10px;
+}
+
+.gb-error strong {
+  font-size: 13px;
+  color: #a94442;
+}
+
+.gb-error span {
+  font-size: 12px;
+  color: #a94442;
+}
+
+.gb-error__retry {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  background: #ffffff;
+  border: 1px solid #d9534f;
+  color: #a94442;
+  border-radius: 3px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.gb-embed__header {
+  margin-bottom: 10px;
+}
+
+.gb-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #666;
+  background: #eeeeee;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 3px 8px;
+}
+
+.gb-embed__title {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0 0 16px;
+  color: #222;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.gb-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.gb-metric {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 12px;
+  border-bottom: 1px dashed #eee;
+  padding-bottom: 8px;
+}
+
+.gb-metric__label {
+  font-size: 13px;
+  font-weight: bold;
+  color: #555;
+}
+
+.gb-metric__value {
+  font-size: 15px;
+  font-weight: bold;
+  color: #222;
+  white-space: nowrap;
+}
+
+.gb-qualification {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 6px 12px;
+  border-radius: 3px;
+  margin-bottom: 6px;
+}
+
+.gb-note {
+  font-size: 11px;
+  font-weight: bold;
+  color: #666666;
+  margin: 0 0 16px;
+}
+
+.gb-flag {
+  border-left: 4px solid #ccc;
+  padding: 10px 12px;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 14px;
+  border-radius: 2px;
+}
+
+.gb-flag strong {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.gb-cadence {
+  font-size: 11px;
+  font-weight: bold;
+  color: #666666;
+  margin: 0;
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+
+@media (max-width: 480px) {
+  .gb-embed {
+    padding: 14px;
+  }
+  .gb-metric {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+}

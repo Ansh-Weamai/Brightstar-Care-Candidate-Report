@@ -1,0 +1,366 @@
+/*
+  Step 5 — Recommendation. This is one of our own screens, so everything
+  here comes from design-tokens.css, including the status-good/medium/risk
+  tokens that scoring bands were originally built for.
+*/
+
+.step5-recommendation {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.s5-loading {
+  font-weight: 700;
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  color: var(--ink-secondary);
+  font-style: italic;
+  text-align: center;
+  padding: var(--space-xl) 0;
+}
+
+.s5-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  text-align: center;
+  background: var(--status-risk-tint);
+  border-left: 4px solid var(--status-risk);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+}
+
+.s5-error strong {
+  font-family: var(--font-heading);
+  font-size: var(--fs-base);
+  color: var(--status-risk);
+}
+
+.s5-error span {
+  font-weight: 700;
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  color: var(--ink-secondary);
+}
+
+.s5-error__retry {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  background: var(--brand-white);
+  border: 1px solid var(--status-risk);
+  color: var(--status-risk);
+  border-radius: var(--radius-sm);
+  padding: var(--space-xs) var(--space-md);
+  cursor: pointer;
+}
+
+/* ---------- Summary: overall + two sub-score gauges ---------- */
+
+.s5-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-lg);
+  align-items: center;
+  justify-content: center;
+  background: var(--brand-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-lg);
+}
+
+.s5-overall,
+.s5-subscore {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  text-align: center;
+}
+
+.s5-overall__text,
+.s5-subscore {
+  gap: var(--space-xs);
+}
+
+.s5-overall__label,
+.s5-subscore__label {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  color: var(--ink-secondary);
+}
+
+.s5-subscores {
+  display: flex;
+  gap: var(--space-lg);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.s5-gauge__score {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  fill: var(--ink-primary);
+}
+
+.s5-band,
+.s5-overall__band,
+.s5-subscore__band {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-lg);
+}
+
+.s5-band--good { background: var(--status-good-tint); color: var(--status-good); }
+.s5-band--medium { background: var(--status-medium-tint); color: var(--status-medium-ink); }
+.s5-band--risk { background: var(--status-risk-tint); color: var(--status-risk); }
+
+/* ---------- Factor breakdown ---------- */
+
+.s5-breakdown {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-lg);
+}
+
+.s5-breakdown__group {
+  flex: 1 1 260px;
+  background: var(--brand-white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-md);
+}
+
+.s5-breakdown__group h4 {
+  font-family: var(--font-heading);
+  font-size: var(--fs-base);
+  font-weight: 600;
+  color: var(--ink-primary);
+  margin: 0 0 var(--space-sm);
+}
+
+.s5-factor {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 72px 56px;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-xs) 0;
+}
+
+.s5-factor__label {
+  font-weight: 700;
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  color: var(--ink-secondary);
+}
+
+.s5-factor__bar-track {
+  height: 6px;
+  background: var(--brand-blue-tint);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.s5-factor__bar-fill {
+  height: 100%;
+  background: var(--brand-blue);
+}
+
+.s5-factor__points {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--fs-xs);
+  color: var(--ink-primary);
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* ---------- Historical precedent callout ---------- */
+
+.s5-precedent {
+  background: var(--status-risk-tint);
+  border-left: 4px solid var(--status-risk);
+  border-radius: var(--radius-sm);
+  padding: var(--space-md);
+}
+
+.s5-precedent__label {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  color: var(--status-risk);
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+
+.s5-precedent p {
+  font-weight: 700;
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  color: var(--ink-primary);
+  margin: 0;
+}
+
+/* ---------- Recommendation panels ---------- */
+
+.s5-panel {
+  background: var(--brand-white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-md) var(--space-lg);
+}
+
+.s5-panel--plan { border-top: 3px solid var(--accent-gold); }
+.s5-panel--expansion { border-top: 3px solid var(--status-good); }
+.s5-panel--territory-swap,
+.s5-panel--not-ready { border-top: 3px solid var(--status-risk); }
+
+.s5-panel__title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--ink-primary);
+  margin: 0 0 var(--space-sm);
+}
+
+.s5-panel__intro {
+  font-weight: 700;
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  color: var(--ink-secondary);
+  margin: 0 0 var(--space-sm);
+}
+
+.s5-panel__empty {
+  font-weight: 700;
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  color: var(--ink-secondary);
+  font-style: italic;
+  margin: 0;
+}
+
+.s5-panel__footer {
+  font-weight: 700;
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  color: var(--ink-secondary);
+  margin: var(--space-sm) 0 0;
+}
+
+.s5-alt-list,
+.s5-plan-list,
+.s5-gap-list {
+  margin: 0;
+  padding-left: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.s5-alt-list li,
+.s5-plan-list li,
+.s5-gap-list li {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  color: var(--ink-primary);
+}
+
+/* ---------- Override ---------- */
+
+.s5-override {
+  background: var(--brand-blue-tint);
+  border-radius: var(--radius-md);
+  padding: var(--space-md) var(--space-lg);
+}
+
+.s5-override__trigger {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--fs-base);
+  background: var(--brand-white);
+  color: var(--ink-primary);
+  border: 1px solid var(--brand-blue);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-lg);
+  cursor: pointer;
+}
+
+.s5-override__form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-sm);
+}
+
+.s5-override__form label {
+  display: block;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--fs-xs);
+  color: var(--ink-secondary);
+  margin-bottom: var(--space-xs);
+}
+
+.s5-override__form input[type="text"] {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--fs-base);
+  color: var(--ink-primary);
+  background: var(--brand-white);
+  border: 1px solid var(--brand-blue-tint);
+  border-radius: var(--radius-sm);
+  padding: var(--space-sm);
+  min-width: 260px;
+  flex: 1;
+}
+
+.s5-override__form input[type="text"]:focus-visible,
+.s5-override__trigger:focus-visible,
+.s5-override__confirm:focus-visible {
+  outline: 3px solid var(--brand-blue);
+  outline-offset: 2px;
+}
+
+.s5-override__confirm {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--fs-base);
+  background: var(--brand-blue);
+  color: var(--brand-white);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-lg);
+  cursor: pointer;
+}
+
+.s5-override__confirmation {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--status-good);
+  margin: 0;
+}
+
+@media (max-width: 480px) {
+  .s5-summary {
+    flex-direction: column;
+  }
+  .s5-factor {
+    grid-template-columns: minmax(0, 1fr) 48px 44px;
+  }
+  .s5-override__form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .s5-override__form input[type="text"] {
+    min-width: 0;
+  }
+}

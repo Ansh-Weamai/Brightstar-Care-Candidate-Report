@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BrightStar Deal Screen: Design Tokens</title>
+<link rel="stylesheet" href="app/static/css/design-tokens.css">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: var(--font-body);
+    color: var(--ink-primary);
+    background: var(--brand-blue-tint);
+    padding: var(--space-xl) var(--space-lg);
+  }
+  h1, h2, h3 {
+    font-family: var(--font-heading);
+    margin: 0 0 var(--space-sm) 0;
+  }
+  h1 { font-size: var(--fs-3xl); }
+  h2 {
+    font-size: var(--fs-xl);
+    margin-top: var(--space-xl);
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid var(--brand-blue-tint);
+  }
+  p.lede {
+    color: var(--ink-secondary);
+    max-width: 640px;
+    margin-top: 0;
+  }
+  section { margin-bottom: var(--space-xl); }
+
+  .logo-panel {
+    background: var(--brand-blue);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-md);
+    max-width: 320px;
+  }
+  .logo-panel img { width: 100%; max-width: 220px; display: block; }
+
+  .swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--space-md);
+  }
+  .swatch {
+    background: var(--brand-white);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+  .swatch-fill { height: 80px; }
+  .swatch-info {
+    padding: var(--space-sm) var(--space-md);
+  }
+  .swatch-info .name {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: var(--fs-sm);
+  }
+  .swatch-info .hex {
+    font-family: var(--font-body);
+    color: var(--ink-secondary);
+    font-size: var(--fs-xs);
+  }
+
+  .type-sample { margin-bottom: var(--space-md); }
+  .type-sample .label {
+    font-size: var(--fs-xs);
+    color: var(--ink-secondary);
+    margin-bottom: var(--space-xs);
+  }
+  .font-heading-sample { font-family: var(--font-heading); }
+  .font-body-sample { font-family: var(--font-body); }
+
+  .status-row { display: flex; gap: var(--space-md); flex-wrap: wrap; }
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-xs) var(--space-md);
+    border-radius: 999px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: var(--fs-sm);
+  }
+  .status-pill .dot {
+    width: 10px; height: 10px; border-radius: 50%;
+  }
+  .pill-good { background: var(--status-good-tint); color: var(--status-good); }
+  .pill-good .dot { background: var(--status-good); }
+  .pill-medium { background: var(--status-medium-tint); color: var(--status-medium-ink); }
+  .pill-medium .dot { background: var(--status-medium); }
+  .pill-risk { background: var(--status-risk-tint); color: var(--status-risk); }
+  .pill-risk .dot { background: var(--status-risk); }
+
+  .scale-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: var(--space-md);
+  }
+  .scale-box {
+    background: var(--brand-white);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
+    padding: var(--space-md);
+    text-align: center;
+    font-family: var(--font-heading);
+    font-size: var(--fs-sm);
+    color: var(--ink-secondary);
+  }
+  .radius-demo { background: var(--brand-blue-tint); margin-bottom: var(--space-sm); height: 48px; }
+
+  .shadow-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: var(--space-lg);
+  }
+  .shadow-box {
+    background: var(--brand-white);
+    border-radius: var(--radius-md);
+    height: 100px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-heading);
+    font-size: var(--fs-sm);
+    color: var(--ink-secondary);
+  }
+</style>
+</head>
+<body>
+
+  <h1>BrightStar Deal Screen: Design Tokens</h1>
+  <p class="lede">Style-guide sanity check. Brand blue is sampled directly from the logo file below (not guessed). See the note under Brand Colors.</p>
+
+  <section>
+    <h2>Logo</h2>
+    <div class="logo-panel">
+      <img src="logos/brightstar/lockup.jpg" alt="BrightStar Care logo">
+    </div>
+  </section>
+
+  <section>
+    <h2>Brand Colors</h2>
+    <p class="lede" style="margin-top:-8px; font-size: var(--fs-sm);">
+      Sampled background pixel (identical across all four corners of the logo file,
+      and the single most common pixel value overall): <strong>#3C8FC1</strong>.
+      This is noticeably lighter / less saturated than the #0078C8–#0098D8 reference
+      range. Using the sampled value rather than forcing it toward the guess.
+    </p>
+    <div class="swatch-grid">
+      <div class="swatch">
+        <div class="swatch-fill" style="background:var(--brand-blue)"></div>
+        <div class="swatch-info"><div class="name">brand-blue</div><div class="hex">#3C8FC1 (sampled)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-fill" style="background:var(--brand-blue-tint)"></div>
+        <div class="swatch-info"><div class="name">brand-blue-tint</div><div class="hex">#E2EEF6</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-fill" style="background:var(--brand-white); border-bottom:1px solid var(--brand-blue-tint);"></div>
+        <div class="swatch-info"><div class="name">brand-white</div><div class="hex">#FFFFFF (sampled)</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Accent: Scoring Layer Only</h2>
+    <p class="lede" style="margin-top:-8px; font-size: var(--fs-sm);">
+      Gold/amber marks whatever is genuinely new (our scoring layer), never applied to
+      BrightStar's own chrome. It doubles as the Medium status color below.
+    </p>
+    <div class="swatch-grid">
+      <div class="swatch">
+        <div class="swatch-fill" style="background:var(--accent-gold)"></div>
+        <div class="swatch-info"><div class="name">accent-gold</div><div class="hex">#E8A33D</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-fill" style="background:var(--accent-gold-tint)"></div>
+        <div class="swatch-info"><div class="name">accent-gold-tint</div><div class="hex">#FCF1E2</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Status Colors (Scoring Bands)</h2>
+    <div class="swatch-grid">
+      <div class="swatch">
+        <div class="swatch-fill" style="background:var(--status-good)"></div>
+        <div class="swatch-info"><div class="name">status-good</div><div class="hex">#3F6B4A</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-fill" style="background:var(--status-good-tint)"></div>
+        <div class="swatch-info"><div class="name">status-good-tint</div><div class="hex">#E2E9E4</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-fill" style="background:var(--status-medium)"></div>
+        <div class="swatch-info"><div class="name">status-medium</div><div class="hex">= accent-gold</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-fill" style="background:var(--status-medium-tint)"></div>
+        <div class="swatch-info"><div class="name">status-medium-tint</div><div class="hex">= accent-gold-tint</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-fill" style="background:var(--status-risk)"></div>
+        <div class="swatch-info"><div class="name">status-risk</div><div class="hex">#9A3324</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-fill" style="background:var(--status-risk-tint)"></div>
+        <div class="swatch-info"><div class="name">status-risk-tint</div><div class="hex">#F0E0DE</div></div>
+      </div>
+    </div>
+
+    <h3 style="font-family:var(--font-heading); font-size:var(--fs-base); margin-top:var(--space-lg);">As status pills</h3>
+    <div class="status-row">
+      <span class="status-pill pill-good"><span class="dot"></span>Good</span>
+      <span class="status-pill pill-medium"><span class="dot"></span>Medium</span>
+      <span class="status-pill pill-risk"><span class="dot"></span>Risk</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Ink (Text) Colors</h2>
+    <div class="swatch-grid">
+      <div class="swatch">
+        <div class="swatch-fill" style="background:var(--ink-primary)"></div>
+        <div class="swatch-info"><div class="name">ink-primary</div><div class="hex">#1F2A37</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-fill" style="background:var(--ink-secondary)"></div>
+        <div class="swatch-info"><div class="name">ink-secondary</div><div class="hex">#5B6B7A</div></div>
+      </div>
+    </div>
+    <div class="swatch-grid" style="margin-top: var(--space-md);">
+      <div class="swatch" style="background:var(--brand-blue);">
+        <div class="swatch-info" style="padding: var(--space-md);">
+          <div style="color: var(--brand-white); font-family: var(--font-heading); font-weight:600;">Ink on blue</div>
+          <div style="color: var(--brand-white); font-family: var(--font-body); font-size: var(--fs-sm); opacity:0.9;">brand-white reads clean here.</div>
+        </div>
+      </div>
+      <div class="swatch" style="background:var(--brand-white); border:1px solid var(--brand-blue-tint);">
+        <div class="swatch-info" style="padding: var(--space-md);">
+          <div style="color: var(--ink-primary); font-family: var(--font-heading); font-weight:600;">Ink on white</div>
+          <div style="color: var(--ink-secondary); font-family: var(--font-body); font-size: var(--fs-sm);">ink-secondary for supporting text.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Type Scale</h2>
+
+    <div class="type-sample">
+      <div class="label">Poppins 700 / 2.5rem: Headings</div>
+      <div class="font-heading-sample" style="font-weight:700; font-size: var(--fs-3xl);">Deal Screen Console</div>
+    </div>
+    <div class="type-sample">
+      <div class="label">Poppins 600 / 1.5rem: Section headers, nav</div>
+      <div class="font-heading-sample" style="font-weight:600; font-size: var(--fs-xl);">Territory Fit Score</div>
+    </div>
+    <div class="type-sample">
+      <div class="label">Poppins 600 / 1rem: Buttons</div>
+      <div class="font-heading-sample" style="font-weight:600; font-size: var(--fs-base);">Run Screen</div>
+    </div>
+    <div class="type-sample">
+      <div class="label">Inter 400 / 1rem: Body text</div>
+      <div class="font-body-sample" style="font-weight:400; font-size: var(--fs-base);">This candidate's territory overlaps two existing franchise boundaries by approximately 4.2 miles.</div>
+    </div>
+    <div class="type-sample">
+      <div class="label">Inter 600 / 1.125rem: Data values</div>
+      <div class="font-body-sample" style="font-weight:600; font-size: var(--fs-lg);">82 / 100</div>
+    </div>
+    <div class="type-sample">
+      <div class="label">Inter 400 / 0.875rem: Captions, secondary data</div>
+      <div class="font-body-sample" style="font-weight:400; font-size: var(--fs-sm); color: var(--ink-secondary);">Last updated 3 hours ago</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Border Radius</h2>
+    <div class="scale-grid">
+      <div>
+        <div class="radius-demo" style="border-radius: var(--radius-sm);"></div>
+        <div class="scale-box">radius-sm: 8px</div>
+      </div>
+      <div>
+        <div class="radius-demo" style="border-radius: var(--radius-md);"></div>
+        <div class="scale-box">radius-md: 10px</div>
+      </div>
+      <div>
+        <div class="radius-demo" style="border-radius: var(--radius-lg);"></div>
+        <div class="scale-box">radius-lg: 12px</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Spacing Scale</h2>
+    <div style="display:flex; align-items:flex-end; gap: var(--space-md);">
+      <div style="text-align:center;">
+        <div style="width: var(--space-xs); height: var(--space-xs); background:var(--brand-blue);"></div>
+        <div class="scale-box" style="box-shadow:none; padding: var(--space-xs);">xs 4px</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="width: var(--space-sm); height: var(--space-sm); background:var(--brand-blue);"></div>
+        <div class="scale-box" style="box-shadow:none; padding: var(--space-xs);">sm 8px</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="width: var(--space-md); height: var(--space-md); background:var(--brand-blue);"></div>
+        <div class="scale-box" style="box-shadow:none; padding: var(--space-xs);">md 16px</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="width: var(--space-lg); height: var(--space-lg); background:var(--brand-blue);"></div>
+        <div class="scale-box" style="box-shadow:none; padding: var(--space-xs);">lg 24px</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="width: var(--space-xl); height: var(--space-xl); background:var(--brand-blue);"></div>
+        <div class="scale-box" style="box-shadow:none; padding: var(--space-xs);">xl 40px</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Shadow Scale</h2>
+    <div class="shadow-grid">
+      <div class="shadow-box" style="box-shadow: var(--shadow-sm);">shadow-sm</div>
+      <div class="shadow-box" style="box-shadow: var(--shadow-md);">shadow-md</div>
+      <div class="shadow-box" style="box-shadow: var(--shadow-lg);">shadow-lg</div>
+    </div>
+  </section>
+
+</body>
+</html>

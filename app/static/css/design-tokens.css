@@ -1,0 +1,66 @@
+/*
+  BrightStar Deal Screen Console — Design Tokens
+  Brand blue sampled directly from logos/images.jpg (flat background fill,
+  confirmed identical across all four corners + dominant pixel count).
+  Actual sample: #3C8FC1 — lighter/less saturated than the #0078C8-#0098D8
+  reference range we started from. Using the sampled value, not the guess.
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Brand */
+  --brand-blue: #3C8FC1;
+  --brand-blue-tint: #E2EEF6;
+  --brand-blue-deep: #1B3F56; /* darkened brand-blue (HSL lightness 0.50 -> 0.22), for the persistent top banner */
+  --brand-white: #FFFFFF;
+
+  /* Accent — new scoring layer only, never used for BrightStar's own chrome */
+  --accent-gold: #E8A33D;
+  --accent-gold-tint: #FCF1E2;
+
+  /* Status (scoring bands) */
+  --status-good: #3F6B4A;
+  --status-good-tint: #E2E9E4;
+  --status-medium: var(--accent-gold);
+  --status-medium-tint: var(--accent-gold-tint);
+  /* accent-gold itself is too light/saturated for body text on its own
+     tint — good/risk are dark enough to double as their own ink color,
+     medium needs a darker variant just for text. */
+  --status-medium-ink: #8A5F18;
+  --status-risk: #9A3324;
+  --status-risk-tint: #F0E0DE;
+
+  /* Ink */
+  --ink-primary: #1F2A37;   /* dark slate-navy, legible on white and brand-blue */
+  --ink-secondary: #4C5A66; /* muted slate — darkened for a safe AA margin (was #5B6B7A at 4.65:1, too close to the 4.5:1 floor on brand-blue-tint) */
+
+  /* Type */
+  --font-heading: 'Poppins', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-body: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: 1.5rem;
+  --fs-2xl: 2rem;
+  --fs-3xl: 2.5rem;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 40px;
+
+  /* Shadows — soft, trustworthy, not flashy */
+  --shadow-sm: 0 1px 2px rgba(31, 42, 55, 0.06), 0 1px 1px rgba(31, 42, 55, 0.04);
+  --shadow-md: 0 4px 10px rgba(31, 42, 55, 0.08), 0 1px 3px rgba(31, 42, 55, 0.05);
+  --shadow-lg: 0 10px 24px rgba(31, 42, 55, 0.10), 0 2px 6px rgba(31, 42, 55, 0.06);
+}

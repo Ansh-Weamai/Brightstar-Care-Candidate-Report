@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BrightStar Deal Screen Console</title>
+<link rel="stylesheet" href="/static/css/design-tokens.css">
+<link rel="stylesheet" href="/static/css/tour-shell.css">
+<link rel="stylesheet" href="/static/css/step1-intake.css">
+<link rel="stylesheet" href="/static/css/step2-lead-heat.css">
+<link rel="stylesheet" href="/static/css/step3-territory.css">
+<link rel="stylesheet" href="/static/css/step4-converge.css">
+<link rel="stylesheet" href="/static/css/step5-recommendation.css">
+<style>
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--brand-blue-tint);
+    font-family: var(--font-body);
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ---------- Full-bleed persistent top banner ---------- */
+  .app-banner {
+    width: 100%;
+    box-sizing: border-box;
+    background: var(--brand-blue-deep);
+    box-shadow: var(--shadow-md);
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: var(--space-lg);
+    padding: var(--space-md) var(--space-xl);
+  }
+  .app-banner__logo-card {
+    display: inline-flex;
+    background: var(--brand-white);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    padding: var(--space-xs);
+    flex-shrink: 0;
+  }
+  .app-banner__logo-card img {
+    display: block;
+    height: calc(var(--space-xl) * 2 + var(--space-md));
+    width: calc(var(--space-xl) * 2 + var(--space-md));
+    border-radius: var(--radius-sm);
+    object-fit: cover;
+  }
+  .app-banner__logo-card--secondary img {
+    height: calc(var(--space-xl) + var(--space-lg));
+    width: calc(var(--space-xl) + var(--space-lg));
+  }
+  .app-banner__title {
+    grid-column: 2;
+    justify-self: center;
+    text-align: center;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: var(--fs-xl);
+    color: var(--brand-white);
+    letter-spacing: 0.01em;
+  }
+
+  .content-wrapper {
+    flex: 1;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-lg);
+  }
+  #tour-root { width: 100%; }
+
+  @media (max-width: 480px) {
+    .app-banner {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-md);
+    }
+    .app-banner__title {
+      grid-column: 1;
+      font-size: var(--fs-lg);
+    }
+    .app-banner__logo-card img { height: calc(var(--space-xl) * 2 - var(--space-sm)); width: calc(var(--space-xl) * 2 - var(--space-sm)); }
+    .app-banner__logo-card--secondary img { height: calc(var(--space-xl) + var(--space-sm)); width: calc(var(--space-xl) + var(--space-sm)); }
+  }
+
+  .demo-banner {
+    max-width: 720px;
+    margin: 0 auto var(--space-md);
+    font-family: var(--font-heading);
+    font-size: var(--fs-sm);
+    color: var(--ink-secondary);
+    text-align: center;
+  }
+  .demo-complete {
+    text-align: center;
+    padding: var(--space-lg);
+  }
+  .demo-complete h3 {
+    font-family: var(--font-heading);
+    font-size: var(--fs-lg);
+    margin: 0 0 var(--space-sm);
+  }
+  .demo-complete__actions {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: var(--space-md);
+  }
+  .demo-complete__btn {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: var(--fs-base);
+    background: var(--brand-blue);
+    color: var(--brand-white);
+    border: none;
+    border-radius: var(--radius-md);
+    padding: var(--space-sm) var(--space-lg);
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+  }
+</style>
+</head>
+<body>
+
+  <header class="app-banner">
+    <span class="app-banner__logo-card">
+      <img src="/logos/brightstar/lockup.jpg" alt="BrightStar Care">
+    </span>
+    <h1 class="app-banner__title">BrightStar Candidate Report</h1>
+    <span class="app-banner__logo-card app-banner__logo-card--secondary">
+      <img src="/logos/weam/lockup.jpg" alt="Weam AI">
+    </span>
+  </header>
+
+  <div class="content-wrapper">
+    <p class="demo-banner">Steps 1–5, scoring served from the real API.</p>
+    <div id="tour-root"></div>
+  </div>
+
+  <script src="/static/js/tour-shell.js"></script>
+  <script src="/static/js/lib/api-client.js"></script>
+  <script src="/static/js/lib/scoring-client.js"></script>
+  <script src="/static/js/steps/step1-intake.js"></script>
+  <script src="/static/js/steps/step2-lead-heat.js"></script>
+  <script src="/static/js/steps/step3-territory.js"></script>
+  <script src="/static/js/steps/step4-converge.js"></script>
+  <script src="/static/js/steps/step5-recommendation.js"></script>
+  <script>
+    // Shared state later steps read from (exposed on window so step
+    // scripts loaded separately can all reach the same object).
+    const tourState = {};
+    window.tourState = tourState;
+
+    const stepDefs = [
+      {
+        name: 'Candidate Intake',
+        caption: "This is everything you'd normally have on a deal before you check it against anything else.",
+      },
+      {
+        name: 'Lead Heat Index',
+        caption: "This is the Lead Heat Index your team already uses. We read it, we don't replace it.",
+      },
+      {
+        name: 'Territory Fit',
+        caption: "This is GbBis's own territory read. Again, we're not replacing it, just reading it.",
+      },
+      {
+        name: 'Scoring Engine',
+        caption: "Neither tool talks to the other today. Here's what happens when they do, plus what we add that neither one tracks.",
+      },
+      {
+        name: 'Recommendation',
+        caption: 'This is the read neither FranConnect nor GbBis gives you today.',
+      },
+    ];
+
+    // Step 1 must build first — it's what populates tourState with its
+    // defaults, and Step 2 reads tourState on its very first render.
+    const step1Element = buildStep1Intake(tourState);
+    const step2 = buildStep2LeadHeat(tourState);
+    const step3 = buildStep3Territory(tourState);
+    const step4 = buildStep4Converge(tourState);
+    const step5 = buildStep5Recommendation(tourState);
+
+    const steps = stepDefs.map((s, i) => {
+      if (i === 0) return { ...s, element: step1Element };
+      if (i === 1) return { ...s, element: step2.element, onEnter: step2.refresh };
+      if (i === 2) return { ...s, element: step3.element, onEnter: step3.refresh };
+      if (i === 3) return { ...s, element: step4.element, onEnter: step4.refresh };
+      return { ...s, element: step5.element, onEnter: step5.refresh };
+    });
+
+    const root = document.getElementById('tour-root');
+    const BOOK_A_CALL_URL = 'https://calendly.com/hello-weam/30min';
+
+    function bindDemoCompleteActions() {
+      root.querySelector('[data-role="restart"]').addEventListener('click', () => location.reload());
+    }
+
+    const tour = new TourShell(root, {
+      steps,
+      onExit: () => {
+        root.innerHTML = `
+          <div class="tour-shell">
+            <div class="demo-complete">
+              <h3>Tour exited</h3>
+              <p>This is a placeholder exit state for the demo harness. A real build would route back to the dashboard.</p>
+              <div class="demo-complete__actions">
+                <button type="button" class="demo-complete__btn" data-role="restart">Restart tour</button>
+                <a href="${BOOK_A_CALL_URL}" target="_blank" rel="noopener noreferrer" class="demo-complete__btn">Book a call</a>
+              </div>
+            </div>
+          </div>
+        `;
+        bindDemoCompleteActions();
+      },
+      onComplete: () => {
+        root.innerHTML = `
+          <div class="tour-shell">
+            <div class="demo-complete">
+              <h3>Tour complete</h3>
+              <p>All 5 steps wired end to end, scoring served from the real API throughout.</p>
+              <div class="demo-complete__actions">
+                <button type="button" class="demo-complete__btn" data-role="restart">Restart tour</button>
+                <a href="${BOOK_A_CALL_URL}" target="_blank" rel="noopener noreferrer" class="demo-complete__btn">Book a call</a>
+              </div>
+            </div>
+          </div>
+        `;
+        bindDemoCompleteActions();
+      },
+    });
+  </script>
+
+</body>
+</html>

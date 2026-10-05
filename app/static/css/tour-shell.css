@@ -1,0 +1,205 @@
+/*
+  TourShell — reusable guided-tour chrome.
+  Every value below comes from design-tokens.css custom properties.
+  No colors, fonts, radii, or spacing are hardcoded here.
+*/
+
+.tour-shell {
+  font-family: var(--font-body);
+  color: var(--ink-primary);
+  background: var(--brand-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  max-width: 720px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ---------- Header: step label, exit control, progress ---------- */
+
+.tour-shell__header {
+  padding: var(--space-lg) var(--space-lg) var(--space-md);
+  border-bottom: 1px solid var(--brand-blue-tint);
+}
+
+.tour-shell__topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  margin-bottom: var(--space-sm);
+}
+
+.tour-shell__step-label {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  color: var(--ink-secondary);
+  letter-spacing: 0.01em;
+}
+
+.tour-shell__exit {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--ink-secondary);
+  background: none;
+  border: none;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.tour-shell__exit:hover {
+  color: var(--ink-primary);
+  background: var(--brand-blue-tint);
+}
+
+.tour-shell__progress-track {
+  height: 6px;
+  width: 100%;
+  background: var(--brand-blue-tint);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.tour-shell__progress-fill {
+  height: 100%;
+  background: var(--brand-blue);
+  border-radius: var(--radius-sm);
+  transition: width 0.2s ease;
+}
+
+/* ---------- Stage: caption + step content slot ---------- */
+
+.tour-shell__stage {
+  padding: var(--space-lg);
+  flex: 1;
+}
+
+.tour-shell__caption {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  color: var(--ink-secondary);
+  margin: 0 0 var(--space-md);
+  max-width: 56ch;
+}
+
+.tour-shell__content {
+  min-height: 160px;
+}
+
+/* Demo-only placeholder styling for unbuilt steps */
+.tour-shell__placeholder {
+  border: 1px dashed var(--brand-blue-tint);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  background: var(--brand-blue-tint);
+  text-align: center;
+}
+
+.tour-shell__placeholder h3 {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  margin: 0 0 var(--space-xs);
+  color: var(--ink-primary);
+}
+
+.tour-shell__placeholder p {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  color: var(--ink-secondary);
+  margin: 0;
+}
+
+/* ---------- Footer: Back / Next nav ---------- */
+
+.tour-shell__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg) var(--space-lg);
+}
+
+.tour-shell__nav-btn {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--fs-base);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-lg);
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.tour-shell__nav-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.tour-shell__back {
+  background: var(--brand-white);
+  color: var(--ink-primary);
+  border-color: var(--brand-blue-tint);
+}
+
+.tour-shell__back:not(:disabled):hover {
+  background: var(--brand-blue-tint);
+}
+
+.tour-shell__next {
+  background: var(--brand-blue);
+  color: var(--brand-white);
+  box-shadow: var(--shadow-sm);
+}
+
+.tour-shell__next:not(:disabled):hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* ---------- Focus rings (keyboard accessibility) ---------- */
+
+.tour-shell__exit:focus-visible,
+.tour-shell__nav-btn:focus-visible {
+  outline: 3px solid var(--brand-blue);
+  outline-offset: 2px;
+}
+
+/* ---------- Responsive: narrow mobile viewport ---------- */
+
+@media (max-width: 480px) {
+  .tour-shell {
+    border-radius: var(--radius-md);
+  }
+
+  .tour-shell__header,
+  .tour-shell__stage,
+  .tour-shell__footer {
+    padding-left: var(--space-md);
+    padding-right: var(--space-md);
+  }
+
+  .tour-shell__topline {
+    flex-wrap: wrap;
+  }
+
+  .tour-shell__step-label {
+    font-size: var(--fs-xs);
+  }
+
+  .tour-shell__footer {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .tour-shell__nav-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
