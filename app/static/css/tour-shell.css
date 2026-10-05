@@ -18,6 +18,19 @@
   overflow: hidden;
 }
 
+/* On larger desktop viewports, 720px leaves most of the screen as empty
+   background — scale the card up in steps so it actually uses the room
+   it has, instead of floating as a narrow column on a wide monitor. */
+@media (min-width: 900px) {
+  .tour-shell { max-width: 820px; }
+}
+@media (min-width: 1200px) {
+  .tour-shell { max-width: 960px; }
+}
+@media (min-width: 1600px) {
+  .tour-shell { max-width: 1140px; }
+}
+
 /* ---------- Header: step label, exit control, progress ---------- */
 
 .tour-shell__header {
