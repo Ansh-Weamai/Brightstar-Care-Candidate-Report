@@ -1,6 +1,8 @@
 /**
- * TourShell — reusable linear-tour chrome: step indicator, progress bar,
- * Back/Next nav, Exit control, keyboard navigation.
+ * TourShell — reusable linear-tour chrome: a two-column layout pairing a
+ * per-step editorial aside (headline, narrative, numbered list) with the
+ * step's own form/content card (progress bar, Back/Next nav, Exit control,
+ * keyboard navigation).
  *
  * Steps are plain DOM elements the caller builds and hands in. TourShell
  * never clones, recreates, or clears them — it only toggles visibility —
@@ -10,10 +12,19 @@
  * visible step (including via Back) — for a read-only step computed from
  * other steps' data, this is where it recomputes against current state.
  *
+ * Each step's `aside` describes the left-hand panel for that step:
+ *   aside: {
+ *     eyebrow: 'STEP 1 OF 5 · INTAKE',
+ *     headline: 'Everything you <em>already</em> know about this deal.', // trusted HTML, authored inline, never user input
+ *     body: 'Plain-text supporting paragraph.',
+ *     listTitle: 'WHAT HAPPENS NEXT',
+ *     items: [{ heading: '...', text: '...' }, ...], // exactly 3, rendered numbered 01/02/03
+ *   }
+ *
  * Usage:
  *   const tour = new TourShell(document.getElementById('tour-root'), {
  *     steps: [
- *       { name: 'Welcome', caption: '...', element: document.getElementById('step-1'), onEnter: () => {} },
+ *       { name: 'Welcome', aside: {...}, element: document.getElementById('step-1'), onEnter: () => {} },
  *       ...
  *     ],
  *     onExit: () => { ... },
@@ -64,26 +75,42 @@
 
     _build() {
       this.root.innerHTML = `
-        <div class="tour-shell" role="group" aria-roledescription="guided tour">
-          <div class="tour-shell__header">
-            <div class="tour-shell__topline">
-              <span class="tour-shell__step-label" data-role="step-label"></span>
-              <button type="button" class="tour-shell__exit" data-role="exit">Exit tour</button>
+        <div class="tour-layout">
+          <aside class="tour-aside" data-role="aside">
+            <span class="tour-aside__eyebrow" data-role="aside-eyebrow"></span>
+            <h2 class="tour-aside__headline" data-role="aside-headline"></h2>
+            <p class="tour-aside__body" data-role="aside-body"></p>
+            <span class="tour-aside__list-title" data-role="aside-list-title"></span>
+            <ol class="tour-aside__list" data-role="aside-list"></ol>
+            <div class="tour-aside__trust">
+              <span class="tour-aside__trust-label">Reading live from</span>
+              <div class="tour-aside__trust-chips">
+                <span class="tour-aside__trust-chip">FranConnect</span>
+                <span class="tour-aside__trust-chip">GbBis</span>
+                <span class="tour-aside__trust-chip">BrightStar Benchmarking</span>
+              </div>
             </div>
-            <div class="tour-shell__progress-track"
-                 role="progressbar"
-                 aria-valuemin="1"
-                 data-role="progress-track">
-              <div class="tour-shell__progress-fill" data-role="progress-fill"></div>
+          </aside>
+          <div class="tour-shell" role="group" aria-roledescription="guided tour">
+            <div class="tour-shell__header">
+              <div class="tour-shell__topline">
+                <span class="tour-shell__step-label" data-role="step-label"></span>
+                <button type="button" class="tour-shell__exit" data-role="exit">Exit tour</button>
+              </div>
+              <div class="tour-shell__progress-track"
+                   role="progressbar"
+                   aria-valuemin="1"
+                   data-role="progress-track">
+                <div class="tour-shell__progress-fill" data-role="progress-fill"></div>
+              </div>
             </div>
-          </div>
-          <div class="tour-shell__stage">
-            <p class="tour-shell__caption" data-role="caption"></p>
-            <div class="tour-shell__content" data-role="content"></div>
-          </div>
-          <div class="tour-shell__footer">
-            <button type="button" class="tour-shell__nav-btn tour-shell__back" data-role="back">Back</button>
-            <button type="button" class="tour-shell__nav-btn tour-shell__next" data-role="next">Next</button>
+            <div class="tour-shell__stage">
+              <div class="tour-shell__content" data-role="content"></div>
+            </div>
+            <div class="tour-shell__footer">
+              <button type="button" class="tour-shell__nav-btn tour-shell__back" data-role="back">Back</button>
+              <button type="button" class="tour-shell__nav-btn tour-shell__next" data-role="next">Next</button>
+            </div>
           </div>
         </div>
       `;
@@ -93,10 +120,14 @@
         exitBtn: this.root.querySelector('[data-role="exit"]'),
         progressTrack: this.root.querySelector('[data-role="progress-track"]'),
         progressFill: this.root.querySelector('[data-role="progress-fill"]'),
-        caption: this.root.querySelector('[data-role="caption"]'),
         content: this.root.querySelector('[data-role="content"]'),
         backBtn: this.root.querySelector('[data-role="back"]'),
         nextBtn: this.root.querySelector('[data-role="next"]'),
+        asideEyebrow: this.root.querySelector('[data-role="aside-eyebrow"]'),
+        asideHeadline: this.root.querySelector('[data-role="aside-headline"]'),
+        asideBody: this.root.querySelector('[data-role="aside-body"]'),
+        asideListTitle: this.root.querySelector('[data-role="aside-list-title"]'),
+        asideList: this.root.querySelector('[data-role="aside-list"]'),
       };
 
       this.el.progressTrack.setAttribute('aria-valuemax', String(this.steps.length));
@@ -126,8 +157,26 @@
       const total = this.steps.length;
       const n = this.index + 1;
 
+      // Visually hidden (see CSS) — screen-reader orientation only, since
+      // the aside's eyebrow carries this same "Step X of Y" cue visually.
       this.el.stepLabel.textContent = `Step ${n} of ${total}: ${step.name}`;
-      this.el.caption.textContent = step.caption || '';
+
+      const aside = step.aside || {};
+      this.el.asideEyebrow.textContent = aside.eyebrow || '';
+      this.el.asideHeadline.innerHTML = aside.headline || '';
+      this.el.asideBody.textContent = aside.body || '';
+      this.el.asideListTitle.textContent = aside.listTitle || '';
+      this.el.asideList.innerHTML = (aside.items || [])
+        .map((item, i) => `
+          <li>
+            <span class="num">${String(i + 1).padStart(2, '0')}</span>
+            <span>
+              <span class="item-heading">${item.heading}</span>
+              <span class="item-text">${item.text}</span>
+            </span>
+          </li>
+        `)
+        .join('');
 
       // Swap visible content: previous step's element is detached (not
       // destroyed) and kept in memory on the step object, so its filled-in

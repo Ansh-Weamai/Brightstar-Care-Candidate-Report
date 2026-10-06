@@ -1,39 +1,44 @@
 /*
   BrightStar Deal Screen Console — Design Tokens
-  Brand blue sampled directly from logos/images.jpg (flat background fill,
-  confirmed identical across all four corners + dominant pixel count).
-  Actual sample: #3C8FC1 — lighter/less saturated than the #0078C8-#0098D8
-  reference range we started from. Using the sampled value, not the guess.
+  Rebranded on the Weam design system (see /weam-design-system). Variable
+  names below are kept stable so every existing component file keeps
+  working untouched — only the values underneath changed to Weam's palette.
 */
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  /* Brand */
-  --brand-blue: #3C8FC1;
-  --brand-blue-tint: #E2EEF6;
-  --brand-blue-deep: #1B3F56; /* darkened brand-blue (HSL lightness 0.50 -> 0.22), for the persistent top banner */
-  --brand-white: #FFFFFF;
+  /* Brand — Weam */
+  --brand-blue: #6637EC;        /* Weam "brand" — primary buttons, links, active states (6.32:1 on surface) */
+  --brand-blue-tint: #E1D7FF;   /* Weam "brand-tint" — light panels, dividers, hover backgrounds */
+  --brand-blue-deep: #493582;   /* Weam "brand-strong" — hover/pressed state of brand actions (9.93:1 on surface) */
+  --brand-white: #FFFFFF;       /* Weam "surface" */
 
-  /* Accent — new scoring layer only, never used for BrightStar's own chrome */
-  --accent-gold: #E8A33D;
-  --accent-gold-tint: #FCF1E2;
+  /* Dark section — Weam's midnight pairing. These five pair together only,
+     never mixed with the light ink/surface tokens above. */
+  --midnight: #211B36;
+  --on-midnight: #F8F8FB;             /* headings/body on midnight (15.54:1) */
+  --on-midnight-muted: #9DA3A6;       /* secondary text on midnight ONLY (6.45:1) */
+  --on-midnight-accent: #7C66FC;      /* large text (24px+), links or icon accents on midnight ONLY (4.05:1) */
 
-  /* Status (scoring bands) */
+  /* Accent — Weam's secondary interactive accent, used sparingly to flag
+     what the scoring engine adds (never for BrightStar's own carried-over data) */
+  --accent-gold: #5B3FD9;       /* Weam "accent" — white text on it reads 6.65:1 */
+  --accent-gold-tint: #E1D7FF;  /* reuses Weam's brand-tint — this system has one light-purple tint, not two */
+
+  /* Status (scoring bands) — independent of brand/accent; standard
+     good/caution/risk semantics, not part of the Weam brand palette */
   --status-good: #3F6B4A;
   --status-good-tint: #E2E9E4;
-  --status-medium: var(--accent-gold);
-  --status-medium-tint: var(--accent-gold-tint);
-  /* accent-gold itself is too light/saturated for body text on its own
-     tint — good/risk are dark enough to double as their own ink color,
-     medium needs a darker variant just for text. */
+  --status-medium: #E8A33D;
+  --status-medium-tint: #FCF1E2;
   --status-medium-ink: #8A5F18;
   --status-risk: #9A3324;
   --status-risk-tint: #F0E0DE;
 
-  /* Ink */
-  --ink-primary: #1F2A37;   /* dark slate-navy, legible on white and brand-blue */
-  --ink-secondary: #4C5A66; /* muted slate — darkened for a safe AA margin (was #5B6B7A at 4.65:1, too close to the 4.5:1 floor on brand-blue-tint) */
+  /* Ink — Weam */
+  --ink-primary: #000000;    /* Weam "ink" — primary text/icons on surface */
+  --ink-secondary: #505050;  /* Weam "text-secondary" (8.06:1 on surface) */
 
   /* Type */
   --font-heading: 'Poppins', 'Segoe UI', system-ui, -apple-system, sans-serif;
@@ -60,7 +65,7 @@
   --space-xl: 40px;
 
   /* Shadows — soft, trustworthy, not flashy */
-  --shadow-sm: 0 1px 2px rgba(31, 42, 55, 0.06), 0 1px 1px rgba(31, 42, 55, 0.04);
-  --shadow-md: 0 4px 10px rgba(31, 42, 55, 0.08), 0 1px 3px rgba(31, 42, 55, 0.05);
-  --shadow-lg: 0 10px 24px rgba(31, 42, 55, 0.10), 0 2px 6px rgba(31, 42, 55, 0.06);
+  --shadow-sm: 0 1px 2px rgba(33, 27, 54, 0.06), 0 1px 1px rgba(33, 27, 54, 0.04);
+  --shadow-md: 0 4px 10px rgba(33, 27, 54, 0.08), 0 1px 3px rgba(33, 27, 54, 0.05);
+  --shadow-lg: 0 10px 24px rgba(33, 27, 54, 0.10), 0 2px 6px rgba(33, 27, 54, 0.06);
 }

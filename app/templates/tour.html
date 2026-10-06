@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BrightStar Deal Screen Console</title>
+<link rel="icon" href="/logos/brightstar/lockup.jpg">
 <link rel="stylesheet" href="/static/css/design-tokens.css">
 <link rel="stylesheet" href="/static/css/tour-shell.css">
 <link rel="stylesheet" href="/static/css/step1-intake.css">
@@ -15,25 +16,34 @@
   body {
     margin: 0;
     min-height: 100vh;
-    background: var(--brand-blue-tint);
+    background: #000000;
     font-family: var(--font-body);
     display: flex;
     flex-direction: column;
   }
 
   /* ---------- Full-bleed persistent top banner ---------- */
+  /* Logo is pinned absolutely instead of sharing a grid track with the
+     title, so the title can be truly centered on the full banner width
+     regardless of the logo's own width (a shared-track layout centers
+     the title only within the leftover space next to the logo, which
+     visibly skews it off-center). */
   .app-banner {
+    position: relative;
     width: 100%;
     box-sizing: border-box;
-    background: var(--brand-blue-deep);
+    background: var(--midnight);
     box-shadow: var(--shadow-md);
-    display: grid;
-    grid-template-columns: auto 1fr auto;
+    display: flex;
     align-items: center;
-    gap: var(--space-lg);
+    justify-content: center;
     padding: var(--space-md) var(--space-xl);
   }
   .app-banner__logo-card {
+    position: absolute;
+    left: var(--space-xl);
+    top: 50%;
+    transform: translateY(-50%);
     display: inline-flex;
     background: var(--brand-white);
     border-radius: var(--radius-md);
@@ -48,19 +58,32 @@
     border-radius: var(--radius-sm);
     object-fit: cover;
   }
-  .app-banner__logo-card--secondary img {
-    height: calc(var(--space-xl) + var(--space-lg));
-    width: calc(var(--space-xl) + var(--space-lg));
-  }
   .app-banner__title {
-    grid-column: 2;
-    justify-self: center;
     text-align: center;
     font-family: var(--font-heading);
     font-weight: 700;
     font-size: var(--fs-xl);
-    color: var(--brand-white);
+    color: var(--on-midnight);
     letter-spacing: 0.01em;
+  }
+
+  /* ---------- Persistent Weam watermark, bottom-right, every step ---------- */
+  .app-watermark {
+    position: fixed;
+    right: var(--space-md);
+    bottom: var(--space-md);
+    z-index: 40;
+    display: inline-flex;
+    align-items: center;
+    background: var(--brand-white);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    padding: var(--space-xs) var(--space-sm);
+  }
+  .app-watermark img {
+    display: block;
+    height: 18px;
+    width: auto;
   }
 
   .content-wrapper {
@@ -76,36 +99,50 @@
   #tour-root { width: 100%; }
 
   @media (max-width: 480px) {
+    /* Stack instead of overlay — an absolutely-positioned logo next to a
+       centered title has no room to avoid overlapping once the title
+       wraps on a narrow phone screen. */
     .app-banner {
-      grid-template-columns: 1fr;
-      justify-items: center;
+      flex-direction: column;
       gap: var(--space-sm);
       padding: var(--space-md);
     }
+    .app-banner__logo-card {
+      position: static;
+      transform: none;
+    }
     .app-banner__title {
-      grid-column: 1;
       font-size: var(--fs-lg);
     }
     .app-banner__logo-card img { height: calc(var(--space-xl) * 2 - var(--space-sm)); width: calc(var(--space-xl) * 2 - var(--space-sm)); }
-    .app-banner__logo-card--secondary img { height: calc(var(--space-xl) + var(--space-sm)); width: calc(var(--space-xl) + var(--space-sm)); }
+    .app-watermark { right: var(--space-sm); bottom: var(--space-sm); }
+    .app-watermark img { height: 14px; }
   }
 
   .demo-banner {
-    max-width: 720px;
+    max-width: 960px;
     margin: 0 auto var(--space-md);
     font-family: var(--font-heading);
     font-size: var(--fs-sm);
-    color: var(--ink-secondary);
+    color: var(--on-midnight-muted);
     text-align: center;
   }
-  @media (min-width: 900px) {
-    .demo-banner { max-width: 820px; }
-  }
   @media (min-width: 1200px) {
-    .demo-banner { max-width: 960px; }
+    .demo-banner { max-width: 1100px; }
   }
   @media (min-width: 1600px) {
-    .demo-banner { max-width: 1140px; }
+    .demo-banner { max-width: 1280px; }
+  }
+  @media (max-width: 860px) {
+    .demo-banner { max-width: 640px; }
+  }
+  /* .tour-shell no longer sets its own max-width (that now lives on
+     .tour-layout, shared with the aside) — the exit/complete screens
+     skip the aside, so they need their own width cap here. */
+  .tour-complete-wrap {
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
   }
   .demo-complete {
     text-align: center;
@@ -145,14 +182,15 @@
       <img src="/logos/brightstar/lockup.jpg" alt="BrightStar Care">
     </span>
     <h1 class="app-banner__title">BrightStar Candidate Report</h1>
-    <span class="app-banner__logo-card app-banner__logo-card--secondary">
-      <img src="/logos/weam/lockup.jpg" alt="Weam AI">
-    </span>
   </header>
 
   <div class="content-wrapper">
     <p class="demo-banner">Steps 1–5, scoring served from the real API.</p>
     <div id="tour-root"></div>
+  </div>
+
+  <div class="app-watermark">
+    <img src="/static/img/weam-logo.png" alt="Weam AI">
   </div>
 
   <script src="/static/js/tour-shell.js"></script>
@@ -172,23 +210,73 @@
     const stepDefs = [
       {
         name: 'Candidate Intake',
-        caption: "This is everything you'd normally have on a deal before you check it against anything else.",
+        aside: {
+          eyebrow: 'STEP 1 OF 5 · INTAKE',
+          headline: 'Everything you <em>already</em> know about this deal.',
+          body: "This is everything you'd normally have on a deal before you check it against anything else. Nothing's missing, and nothing's new yet.",
+          listTitle: 'What happens next',
+          items: [
+            { heading: 'Read the signals', text: "We pull in the Lead Heat Index your team already runs." },
+            { heading: 'Read the territory', text: "We pull in GbBis's own read on this zip." },
+            { heading: 'One score, one plan', text: 'Candidate and territory converge into a single Suitability Score.' },
+          ],
+        },
       },
       {
         name: 'Lead Heat Index',
-        caption: "This is the Lead Heat Index your team already uses. We read it, we don't replace it.",
+        aside: {
+          eyebrow: 'STEP 2 OF 5 · FRANCONNECT',
+          headline: 'The score you <em>already</em> trust, untouched.',
+          body: "This is the Lead Heat Index your team already uses. We read it exactly as FranConnect reports it. We don't recompute it, override it, or replace it.",
+          listTitle: "Why we don't rebuild it",
+          items: [
+            { heading: 'It already works', text: "FranConnect's engagement scoring is doing its job." },
+            { heading: 'Duplicating it adds risk', text: 'A second version of the same number just invites disagreement.' },
+            { heading: 'We add the rest', text: 'Capital, distance and touchpoints already feed this score. We fold it into the bigger picture instead.' },
+          ],
+        },
       },
       {
         name: 'Territory Fit',
-        caption: "This is GbBis's own territory read. Again, we're not replacing it, just reading it.",
+        aside: {
+          eyebrow: 'STEP 3 OF 5 · GBBIS',
+          headline: "GbBis's read, <em>exactly</em> as filed.",
+          body: "This is GbBis's own territory read for this zip. Again, we're not replacing it, just reading it the same way your team already does.",
+          listTitle: "What we're checking for",
+          items: [
+            { heading: 'Does the territory qualify', text: 'Population, age 65+, and density against the standard minimum.' },
+            { heading: 'Is it crowded', text: 'Competing agencies already operating nearby.' },
+            { heading: 'Any flags on file', text: 'Moratoriums, or a rocky comparable history.' },
+          ],
+        },
       },
       {
         name: 'Scoring Engine',
-        caption: "Neither tool talks to the other today. Here's what happens when they do, plus what we add that neither one tracks.",
+        aside: {
+          eyebrow: "STEP 4 OF 5 · THE PART THAT'S NEW",
+          headline: 'Where the two tools <em>finally</em> meet.',
+          body: "Neither FranConnect nor GbBis talks to the other today. This is what happens the moment they do, plus the signals neither one tracks on its own.",
+          listTitle: 'What we add on top',
+          items: [
+            { heading: 'Competitive pressure', text: 'How many agencies are already fighting for this territory.' },
+            { heading: 'Labor market tightness', text: 'Whether this territory can actually staff a book of business.' },
+            { heading: 'Comparable performance', text: 'How similar territories actually perform, not just whether they qualify.' },
+          ],
+        },
       },
       {
         name: 'Recommendation',
-        caption: 'This is the read neither FranConnect nor GbBis gives you today.',
+        aside: {
+          eyebrow: 'STEP 5 OF 5 · THE VERDICT',
+          headline: 'The read <em>neither</em> tool gives you.',
+          body: 'This is the recommendation neither FranConnect nor GbBis produces today: one Suitability Score, the factors behind it, and a concrete plan of action.',
+          listTitle: 'What you walk away with',
+          items: [
+            { heading: 'One Suitability Score', text: 'Candidate Readiness and Territory Viability, combined.' },
+            { heading: 'The factor breakdown', text: 'Exactly which signals helped, and which hurt.' },
+            { heading: 'A plan, not just a score', text: 'Concrete next steps, or the case for passing.' },
+          ],
+        },
       },
     ];
 
@@ -219,13 +307,15 @@
       steps,
       onExit: () => {
         root.innerHTML = `
-          <div class="tour-shell">
-            <div class="demo-complete">
-              <h3>Tour exited</h3>
-              <p>This is a placeholder exit state for the demo harness. A real build would route back to the dashboard.</p>
-              <div class="demo-complete__actions">
-                <button type="button" class="demo-complete__btn" data-role="restart">Restart tour</button>
-                <a href="${BOOK_A_CALL_URL}" target="_blank" rel="noopener noreferrer" class="demo-complete__btn">Book a call</a>
+          <div class="tour-complete-wrap">
+            <div class="tour-shell">
+              <div class="demo-complete">
+                <h3>Tour exited</h3>
+                <p>This is a placeholder exit state for the demo harness. A real build would route back to the dashboard.</p>
+                <div class="demo-complete__actions">
+                  <button type="button" class="demo-complete__btn" data-role="restart">Restart tour</button>
+                  <a href="${BOOK_A_CALL_URL}" target="_blank" rel="noopener noreferrer" class="demo-complete__btn">Book a call</a>
+                </div>
               </div>
             </div>
           </div>
@@ -234,13 +324,15 @@
       },
       onComplete: () => {
         root.innerHTML = `
-          <div class="tour-shell">
-            <div class="demo-complete">
-              <h3>Tour complete</h3>
-              <p>All 5 steps wired end to end, scoring served from the real API throughout.</p>
-              <div class="demo-complete__actions">
-                <button type="button" class="demo-complete__btn" data-role="restart">Restart tour</button>
-                <a href="${BOOK_A_CALL_URL}" target="_blank" rel="noopener noreferrer" class="demo-complete__btn">Book a call</a>
+          <div class="tour-complete-wrap">
+            <div class="tour-shell">
+              <div class="demo-complete">
+                <h3>Tour complete</h3>
+                <p>All 5 steps wired end to end, scoring served from the real API throughout.</p>
+                <div class="demo-complete__actions">
+                  <button type="button" class="demo-complete__btn" data-role="restart">Restart tour</button>
+                  <a href="${BOOK_A_CALL_URL}" target="_blank" rel="noopener noreferrer" class="demo-complete__btn">Book a call</a>
+                </div>
               </div>
             </div>
           </div>

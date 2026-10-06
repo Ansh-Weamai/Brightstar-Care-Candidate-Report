@@ -1,0 +1,1 @@
+The Weam wordmark, in cursive script, with its trailing brand-purple dot (`brand`, `#6637EC`). Supplied as PNG. Use it exactly as given — don't redraw, recolor, stretch, or drop the dot. Keep clear space around it of at least the dot's height on every side, and don't scale it down past the point the letterforms start to close up.

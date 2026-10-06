@@ -136,7 +136,7 @@
 <body>
 
   <h1>BrightStar Deal Screen: Design Tokens</h1>
-  <p class="lede">Style-guide sanity check. Brand blue is sampled directly from the logo file below (not guessed). See the note under Brand Colors.</p>
+  <p class="lede">Style-guide sanity check. Rebranded on the Weam design system (see /weam-design-system) — brand purple, accent and ink values below are taken directly from Weam's tokens.json, not sampled or guessed.</p>
 
   <section>
     <h2>Logo</h2>
@@ -148,23 +148,26 @@
   <section>
     <h2>Brand Colors</h2>
     <p class="lede" style="margin-top:-8px; font-size: var(--fs-sm);">
-      Sampled background pixel (identical across all four corners of the logo file,
-      and the single most common pixel value overall): <strong>#3C8FC1</strong>.
-      This is noticeably lighter / less saturated than the #0078C8–#0098D8 reference
-      range. Using the sampled value rather than forcing it toward the guess.
+      Weam's "brand" purple, its light tint, and its "brand-strong" hover/pressed
+      tone, plus a true midnight pairing (<code>--midnight</code> / <code>--on-midnight</code>,
+      not swatched here) reserved for the persistent top banner.
     </p>
     <div class="swatch-grid">
       <div class="swatch">
         <div class="swatch-fill" style="background:var(--brand-blue)"></div>
-        <div class="swatch-info"><div class="name">brand-blue</div><div class="hex">#3C8FC1 (sampled)</div></div>
+        <div class="swatch-info"><div class="name">brand-blue</div><div class="hex">#6637EC (Weam brand)</div></div>
       </div>
       <div class="swatch">
         <div class="swatch-fill" style="background:var(--brand-blue-tint)"></div>
-        <div class="swatch-info"><div class="name">brand-blue-tint</div><div class="hex">#E2EEF6</div></div>
+        <div class="swatch-info"><div class="name">brand-blue-tint</div><div class="hex">#E1D7FF (Weam brand-tint)</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-fill" style="background:var(--brand-blue-deep)"></div>
+        <div class="swatch-info"><div class="name">brand-blue-deep</div><div class="hex">#493582 (Weam brand-strong)</div></div>
       </div>
       <div class="swatch">
         <div class="swatch-fill" style="background:var(--brand-white); border-bottom:1px solid var(--brand-blue-tint);"></div>
-        <div class="swatch-info"><div class="name">brand-white</div><div class="hex">#FFFFFF (sampled)</div></div>
+        <div class="swatch-info"><div class="name">brand-white</div><div class="hex">#FFFFFF (Weam surface)</div></div>
       </div>
     </div>
   </section>
@@ -172,17 +175,19 @@
   <section>
     <h2>Accent: Scoring Layer Only</h2>
     <p class="lede" style="margin-top:-8px; font-size: var(--fs-sm);">
-      Gold/amber marks whatever is genuinely new (our scoring layer), never applied to
-      BrightStar's own chrome. It doubles as the Medium status color below.
+      Weam's secondary accent marks whatever is genuinely new (our scoring layer),
+      never applied to BrightStar's own chrome. It's independent of the Medium
+      status color below — that one stays amber so "caution" doesn't read as
+      just another shade of brand purple.
     </p>
     <div class="swatch-grid">
       <div class="swatch">
         <div class="swatch-fill" style="background:var(--accent-gold)"></div>
-        <div class="swatch-info"><div class="name">accent-gold</div><div class="hex">#E8A33D</div></div>
+        <div class="swatch-info"><div class="name">accent-gold</div><div class="hex">#5B3FD9 (Weam accent)</div></div>
       </div>
       <div class="swatch">
         <div class="swatch-fill" style="background:var(--accent-gold-tint)"></div>
-        <div class="swatch-info"><div class="name">accent-gold-tint</div><div class="hex">#FCF1E2</div></div>
+        <div class="swatch-info"><div class="name">accent-gold-tint</div><div class="hex">#E1D7FF (= brand-blue-tint)</div></div>
       </div>
     </div>
   </section>
@@ -200,11 +205,11 @@
       </div>
       <div class="swatch">
         <div class="swatch-fill" style="background:var(--status-medium)"></div>
-        <div class="swatch-info"><div class="name">status-medium</div><div class="hex">= accent-gold</div></div>
+        <div class="swatch-info"><div class="name">status-medium</div><div class="hex">#E8A33D</div></div>
       </div>
       <div class="swatch">
         <div class="swatch-fill" style="background:var(--status-medium-tint)"></div>
-        <div class="swatch-info"><div class="name">status-medium-tint</div><div class="hex">= accent-gold-tint</div></div>
+        <div class="swatch-info"><div class="name">status-medium-tint</div><div class="hex">#FCF1E2</div></div>
       </div>
       <div class="swatch">
         <div class="swatch-fill" style="background:var(--status-risk)"></div>
@@ -229,11 +234,11 @@
     <div class="swatch-grid">
       <div class="swatch">
         <div class="swatch-fill" style="background:var(--ink-primary)"></div>
-        <div class="swatch-info"><div class="name">ink-primary</div><div class="hex">#1F2A37</div></div>
+        <div class="swatch-info"><div class="name">ink-primary</div><div class="hex">#000000 (Weam ink)</div></div>
       </div>
       <div class="swatch">
         <div class="swatch-fill" style="background:var(--ink-secondary)"></div>
-        <div class="swatch-info"><div class="name">ink-secondary</div><div class="hex">#5B6B7A</div></div>
+        <div class="swatch-info"><div class="name">ink-secondary</div><div class="hex">#505050 (Weam text-secondary)</div></div>
       </div>
     </div>
     <div class="swatch-grid" style="margin-top: var(--space-md);">

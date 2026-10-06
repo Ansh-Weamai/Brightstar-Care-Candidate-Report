@@ -49,7 +49,7 @@
 
 .step1-intake .demo-scenario-btn:hover {
   background: var(--accent-gold);
-  color: var(--ink-primary);
+  color: var(--brand-white);
 }
 
 .step1-intake .demo-scenario-btn:focus-visible {

@@ -1,8 +1,187 @@
 /*
-  TourShell — reusable guided-tour chrome.
+  TourShell — reusable guided-tour chrome: a two-column layout pairing a
+  per-step editorial aside with the step's own form/content card.
   Every value below comes from design-tokens.css custom properties.
   No colors, fonts, radii, or spacing are hardcoded here.
 */
+
+.tour-layout {
+  width: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-xl);
+  max-width: 960px;
+}
+
+/* Desktop viewports get the same graduated widening the card used to get
+   on its own, now shared between the aside and the card. */
+@media (min-width: 1200px) {
+  .tour-layout { max-width: 1100px; grid-template-columns: 380px minmax(0, 1fr); }
+}
+@media (min-width: 1600px) {
+  .tour-layout { max-width: 1280px; grid-template-columns: 420px minmax(0, 1fr); }
+}
+
+/* Below this, aside + card can't sit side by side without either
+   squeezing the form or truncating the headline — stack instead. */
+@media (max-width: 860px) {
+  .tour-layout {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 640px;
+    gap: var(--space-lg);
+  }
+}
+
+/* ---------- Aside: per-step editorial panel ----------
+   Sits directly on the page's black background (see tour.html), so every
+   color here comes from Weam's midnight pairing (on-midnight /
+   on-midnight-muted / on-midnight-accent) instead of the light ink tokens
+   the card on the right uses — those read as invisible-on-black. */
+
+.tour-aside {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding-top: var(--space-sm);
+}
+
+.tour-aside__eyebrow {
+  align-self: flex-start;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--fs-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--brand-white);
+  background: var(--brand-blue);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xs) var(--space-md);
+}
+
+.tour-aside__headline {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--fs-2xl);
+  line-height: 1.15;
+  color: var(--on-midnight);
+  margin: 0;
+}
+
+.tour-aside__headline em {
+  font-style: italic;
+  color: var(--on-midnight-accent);
+}
+
+.tour-aside__body {
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  line-height: 1.6;
+  color: var(--on-midnight-muted);
+  margin: 0;
+  max-width: 48ch;
+}
+
+.tour-aside__list-title {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--fs-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--on-midnight-muted);
+  margin-top: var(--space-sm);
+}
+
+.tour-aside__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+/* Each item is its own boxed card — a soft tint of brand purple over the
+   black page background, not just floating text. */
+.tour-aside__list li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--space-sm);
+  align-items: start;
+  background: rgba(102, 55, 236, 0.12);
+  border: 1px solid rgba(124, 102, 252, 0.3);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-md);
+}
+
+.tour-aside__list .num {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  color: var(--brand-white);
+  background: var(--brand-blue);
+  border-radius: var(--radius-sm);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.tour-aside__list .item-heading {
+  display: block;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  color: var(--on-midnight);
+}
+
+.tour-aside__list .item-text {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  color: var(--on-midnight-muted);
+  margin-top: 2px;
+}
+
+.tour-aside__trust {
+  margin-top: var(--space-sm);
+  padding-top: var(--space-md);
+  border-top: 1px solid rgba(124, 102, 252, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.tour-aside__trust-label {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--fs-xs);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--on-midnight-muted);
+}
+
+.tour-aside__trust-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.tour-aside__trust-chip {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--fs-xs);
+  color: var(--on-midnight);
+  background: rgba(102, 55, 236, 0.12);
+  border: 1px solid rgba(124, 102, 252, 0.3);
+  border-radius: var(--radius-sm);
+  padding: var(--space-xs) var(--space-sm);
+}
+
+/* ---------- Card: the step's own form/content ---------- */
 
 .tour-shell {
   font-family: var(--font-body);
@@ -10,28 +189,13 @@
   background: var(--brand-white);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
-  max-width: 720px;
   width: 100%;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
-/* On larger desktop viewports, 720px leaves most of the screen as empty
-   background — scale the card up in steps so it actually uses the room
-   it has, instead of floating as a narrow column on a wide monitor. */
-@media (min-width: 900px) {
-  .tour-shell { max-width: 820px; }
-}
-@media (min-width: 1200px) {
-  .tour-shell { max-width: 960px; }
-}
-@media (min-width: 1600px) {
-  .tour-shell { max-width: 1140px; }
-}
-
-/* ---------- Header: step label, exit control, progress ---------- */
+/* ---------- Header: step label (sr-only), exit control, progress ---------- */
 
 .tour-shell__header {
   padding: var(--space-lg) var(--space-lg) var(--space-md);
@@ -41,17 +205,23 @@
 .tour-shell__topline {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: var(--space-md);
   margin-bottom: var(--space-sm);
 }
 
+/* The aside's eyebrow already carries "Step X of Y" visually — this stays
+   for screen-reader orientation only. */
 .tour-shell__step-label {
-  font-family: var(--font-heading);
-  font-weight: 600;
-  font-size: var(--fs-sm);
-  color: var(--ink-secondary);
-  letter-spacing: 0.01em;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .tour-shell__exit {
@@ -87,47 +257,15 @@
   transition: width 0.2s ease;
 }
 
-/* ---------- Stage: caption + step content slot ---------- */
+/* ---------- Stage: step content slot ---------- */
 
 .tour-shell__stage {
   padding: var(--space-lg);
   flex: 1;
 }
 
-.tour-shell__caption {
-  font-family: var(--font-body);
-  font-size: var(--fs-sm);
-  color: var(--ink-secondary);
-  margin: 0 0 var(--space-md);
-  max-width: 56ch;
-}
-
 .tour-shell__content {
   min-height: 160px;
-}
-
-/* Demo-only placeholder styling for unbuilt steps */
-.tour-shell__placeholder {
-  border: 1px dashed var(--brand-blue-tint);
-  border-radius: var(--radius-md);
-  padding: var(--space-lg);
-  background: var(--brand-blue-tint);
-  text-align: center;
-}
-
-.tour-shell__placeholder h3 {
-  font-family: var(--font-heading);
-  font-size: var(--fs-lg);
-  font-weight: 600;
-  margin: 0 0 var(--space-xs);
-  color: var(--ink-primary);
-}
-
-.tour-shell__placeholder p {
-  font-family: var(--font-body);
-  font-size: var(--fs-sm);
-  color: var(--ink-secondary);
-  margin: 0;
 }
 
 /* ---------- Footer: Back / Next nav ---------- */
@@ -187,6 +325,14 @@
 /* ---------- Responsive: narrow mobile viewport ---------- */
 
 @media (max-width: 480px) {
+  .tour-aside {
+    padding-top: 0;
+  }
+
+  .tour-aside__headline {
+    font-size: var(--fs-xl);
+  }
+
   .tour-shell {
     border-radius: var(--radius-md);
   }
@@ -196,14 +342,6 @@
   .tour-shell__footer {
     padding-left: var(--space-md);
     padding-right: var(--space-md);
-  }
-
-  .tour-shell__topline {
-    flex-wrap: wrap;
-  }
-
-  .tour-shell__step-label {
-    font-size: var(--fs-xs);
   }
 
   .tour-shell__footer {

@@ -200,7 +200,7 @@
   align-items: center;
   gap: var(--space-xs);
   background: var(--accent-gold);
-  color: var(--ink-primary);
+  color: var(--brand-white);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
   padding: var(--space-lg) var(--space-xl);
